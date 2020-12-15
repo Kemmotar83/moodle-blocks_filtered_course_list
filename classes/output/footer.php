@@ -14,14 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Contains class block_filtered_course_list\output\footer
- *
- * @package    block_filtered_course_list
- * @copyright  2025 CLAMP
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_filtered_course_list\output;
 
 /**
@@ -32,11 +24,12 @@ namespace block_filtered_course_list\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class footer implements \renderable, \templatable {
+
     /** @var string Text for footer link */
     public $linktext;
     /** @var string Link to the Course index page */
     public $url;
-    /** @var bool Whether or not to display the link */
+    /** @var boolean Whether or not to display the link */
     public $visible = false;
 
     /**
@@ -44,7 +37,7 @@ class footer implements \renderable, \templatable {
      *
      * @param array $params A list of settings used to determine the link display
      */
-    public function __construct($params = []) {
+    public function __construct($params = array()) {
 
         if ($params['usertype'] == 'manager' || $params['hideallcourseslink'] == BLOCK_FILTERED_COURSE_LIST_FALSE) {
             $this->visible = true;
@@ -68,11 +61,11 @@ class footer implements \renderable, \templatable {
      * @return array $data Template-ready data
      */
     public function export_for_template(\renderer_base $output) {
-        $data = [
+        $data = array(
             'linktext' => $this->linktext,
             'url'      => $this->url,
             'visible'  => $this->visible,
-        ];
+        );
         return $data;
     }
 }

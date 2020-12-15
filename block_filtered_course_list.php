@@ -94,6 +94,10 @@ class block_filtered_course_list extends block_base {
     public function get_aria_role() {
         return 'region';
     }
+	
+	public function get_rubrics() {
+		return $this->rubrics;
+	}
 
     /**
      * Returns the rubrics data

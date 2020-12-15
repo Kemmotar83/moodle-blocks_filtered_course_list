@@ -14,14 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Contains class block_filtered_course_list\output\renderable_rubric
- *
- * @package    block_filtered_course_list
- * @copyright  2025 CLAMP
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_filtered_course_list\output;
 
 /**
@@ -32,6 +24,7 @@ namespace block_filtered_course_list\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class renderable_rubric implements \renderable, \templatable {
+
     /** @var object Rubric */
     public $rubric;
     /** @var string Block instance id */
@@ -59,23 +52,21 @@ class renderable_rubric implements \renderable, \templatable {
      * @return array $data Template-ready data
      */
     public function export_for_template(\renderer_base $output) {
-        $itemdata = array_map(function ($item) use ($output) {
+        $itemdata = array_map(function($item) use ($output) {
             $renderable = new list_item($item, $this->rubric->config);
             $export = $renderable->export_for_template($output);
             return $export;
         }, $this->rubric->courses);
         $key = $this->key + 1;
         $hash = 'block-fcl_' . md5("{$this->instid}{$key}{$this->rubric->title}");
-        if (
-            array_key_exists($hash, $_COOKIE)
-                && property_exists($this->rubric->config, 'persistentexpansion')
-                && $this->rubric->config->persistentexpansion
-        ) {
+        if (array_key_exists($hash, $_COOKIE)
+            && property_exists($this->rubric->config, 'persistentexpansion')
+            && $this->rubric->config->persistentexpansion) {
             $this->rubric->expanded = ($_COOKIE[$hash] == 'expanded') ? 'expanded' : 'collapsed';
         }
         $exp = ($this->rubric->expanded == 'expanded') ? 'true' : 'false';
         $hidden = ($this->rubric->expanded != 'expanded') ? 'true' : 'false';
-        $data = [
+        $data = array(
             'state'  => $this->rubric->expanded,
             'exp'    => $exp,
             'label'  => $this->rubric->title,
@@ -84,7 +75,7 @@ class renderable_rubric implements \renderable, \templatable {
             'key'    => $key,
             'items'  => array_values($itemdata),
             'hash'   => $hash,
-        ];
+        );
         return $data;
     }
 }

@@ -14,14 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Contains class block_filtered_course_list\output\content
- *
- * @package    block_filtered_course_list
- * @copyright  2025 CLAMP
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
 namespace block_filtered_course_list\output;
 
 /**
@@ -32,18 +24,19 @@ namespace block_filtered_course_list\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class content implements \renderable, \templatable {
+
     /** @var array Rubrics to display */
-    public $rubrics = [];
+    public $rubrics = array();
     /** @var string Block instance id */
     public $instid;
 
     /**
      * Constructor
      *
-     * @param string $instid The instance id of the calling block
      * @param array $rubrics The list of rubrics to display
+     * @param string $instid The instance id of the calling block
      */
-    public function __construct($instid, $rubrics = []) {
+    public function __construct($rubrics = array(), $instid) {
         $this->rubrics = $rubrics;
         $this->instid = $instid;
     }
@@ -55,16 +48,16 @@ class content implements \renderable, \templatable {
      * @return array $data Template-ready data
      */
     public function export_for_template(\renderer_base $output) {
-        $rubricdata = array_map(function ($rubric, $key) use ($output) {
+        $rubricdata = array_map(function($rubric, $key) use ($output) {
             $rubrichelper = new renderable_rubric($rubric, $this->instid, $key);
             $export = $rubrichelper->export_for_template($output);
             return $export;
         }, $this->rubrics, array_keys($this->rubrics));
-        $data = [
+        $data = array(
             'instid'  => $this->instid,
             'rubrics' => $rubricdata,
             'persist' => $this->rubrics[0]->config->persistentexpansion,
-        ];
+        );
         return $data;
     }
 }
