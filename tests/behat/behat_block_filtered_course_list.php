@@ -24,11 +24,11 @@
 
 require_once(__DIR__ . '/../../../../lib/behat/behat_base.php');
 
-use Behat\Behat\Context\Step\Given as Given;
-use Behat\Behat\Context\Step\When as When;
-use Behat\Gherkin\Node\PyStringNode as PyStringNode;
-use Behat\Testwork\Hook\Scope\AfterSuiteScope as AfterSuiteScope;
-use Behat\Testwork\Hook\Scope\BeforeSuiteScope as BeforeSuiteScope;
+use Behat\Behat\Context\Step\Given;
+use Behat\Behat\Context\Step\When;
+use Behat\Gherkin\Node\PyStringNode;
+use Behat\Testwork\Hook\Scope\AfterSuiteScope;
+use Behat\Testwork\Hook\Scope\BeforeSuiteScope;
 
 /**
  * Custom step definitions
