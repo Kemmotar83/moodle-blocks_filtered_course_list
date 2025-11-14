@@ -14,7 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Contains class block_filtered_course_list\output\list_item
+ *
+ * @package    block_filtered_course_list
+ * @copyright  2025 CLAMP
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace block_filtered_course_list\output;
+
+use core_course_category;
 
 /**
  * Helper class for list items.
@@ -24,13 +34,12 @@ namespace block_filtered_course_list\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class list_item implements \renderable, \templatable {
-
     /** @var array of CSS classes for the list item */
-    public $classes = array('block-fcl__list__item');
+    public $classes = ['block-fcl__list__item'];
     /** @var string Display text for the list item link */
     public $displaytext;
     /** @var array of CSS classes for the list item link */
-    public $linkclasses = array('block-fcl__list__link');
+    public $linkclasses = ['block-fcl__list__link'];
     /** @var string Text to display when the list item link is hovered */
     public $title;
     /** @var moodle_url object The destination for the list item link */
@@ -51,14 +60,14 @@ class list_item implements \renderable, \templatable {
 
         $type = (get_class($itemobject) == 'core_course_category') ? 'category' : 'course';
 
-        switch ($type){
+        switch ($type) {
             case 'course':
                 $this->classes[] = 'block-fcl__list__item--course';
                 $completionclass = $this->completion_class($itemobject, $USER->id);
                 if (!empty($completionclass)) {
                     $this->classes[] = $completionclass;
                 }
-                $this->displaytext = \block_filtered_course_list_lib::coursedisplaytext($itemobject, $config->coursenametpl);
+                $this->displaytext = \block_filtered_course_list\lib::coursedisplaytext($itemobject, $config->coursenametpl);
                 if (!$itemobject->visible) {
                     $this->linkclasses[] = 'dimmed';
                 }
@@ -73,7 +82,8 @@ class list_item implements \renderable, \templatable {
                         'core_course',
                         'courses',
                         $itemobject->id,
-                        \context_course::instance($itemobject->id));
+                        \context_course::instance($itemobject->id)
+                    );
                     $fastring = ($isfave) ? 'fa-star' : 'fa-graduation-cap';
                     $srtitle = ($isfave) ? get_string('favourite', 'core_course') : get_string('course', 'core');
                     $this->icon = new icon($itemobject->id, $isfave, $fastring, $srtitle);
@@ -102,7 +112,7 @@ class list_item implements \renderable, \templatable {
      * @return array $data Template-ready data
      */
     public function export_for_template(\renderer_base $output) {
-        $data = array(
+        $data = [
             'classes'     => implode(' ', $this->classes),
             'displaytext' => $this->displaytext,
             'linkclasses' => implode(' ', $this->linkclasses),
@@ -110,7 +120,7 @@ class list_item implements \renderable, \templatable {
             'url'         => $this->url,
             'summaryurl'  => $this->summaryurl,
             'icon'        => $this->icon,
-        );
+        ];
         return $data;
     }
 

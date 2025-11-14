@@ -14,6 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Contains class block_filtered_course_list\output\icon
+ *
+ * @package    block_filtered_course_list
+ * @copyright  2025 CLAMP
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 namespace block_filtered_course_list\output;
 
 /**
@@ -24,7 +32,6 @@ namespace block_filtered_course_list\output;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class icon implements \renderable, \templatable {
-
     /** @var int course id */
     public $id;
     /** @var bool is favourite */
@@ -56,12 +63,12 @@ class icon implements \renderable, \templatable {
      * @return array $data Template-ready data
      */
     public function export_for_template(\renderer_base $output) {
-        $data = array(
+        $data = [
             'id' => $this->id,
             'isfavourite' => $this->isfavourite,
             'icon' => $this->icon,
             'title' => $this->title,
-        );
+        ];
         return $data;
     }
 }
